@@ -1,178 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Bootstrap Case</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
-
-<style>
-body {
-  margin: 55px;
-}
-.navbar-fixed-bottom, .navbar-fixed-top {
-  right: 0;
-  left: 0;
-  z-index: 1030;
-}
-.navbar-inverse {
-  background-color: #833f8c;
-  border-color: #833f8c;
-}
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-  color: #fff;
-  background-color: #833f8c;
-}
-.panel-default > .panel-heading-custom {
-    background: #b6985a; color: #000;
-}
-</style>
-
+  <title>Bootstrap 101</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <style>
+    #map { height: 250px; }
+  </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">My Windsor and Maidenhead</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="http://www.rbwm.gov.uk">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Feedback</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
 
-  
 <div class="container">
+  <div class="jumbotron">
+    <h1>My First Bootstrap Page</h1>
+    <p>Resize this responsive page to see the effect!</p> 
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Content</h3>
+      <p>This could be some content</p>
+    </div>
+    <div class="col-sm-4">
+      <div id="map"></div>
+      <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'mapbox.streets'
+		}).addTo(map);
 
- 
 
-<div class="row">
-
-<div class="col-md-4">  
-<div class="panel panel-default">
-<div class="panel-heading panel-heading-custom"><strong>Search </strong></div>
-<div class="panel-body"><input class="typeahead form-control tt-input" type="text" placeholder="Search for local items" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;">
-
-
-</div>
-</div>	   
-</div>
-
-   
-
-<div class="col-md-8">  
-<div class="panel panel-default">
-<div class="panel-heading panel-heading-custom"><strong>My House </strong></div>
-<div id="map" style="width: 100%; height: 250px"></div>
-</div>
-</div>
-<script src="http://leafletjs.com/dist/leaflet.js"></script>
-<script>
-var map = L.map('map').setView([51.505, -0.09], 13);
-L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-maxZoom: 18,
-attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-id: 'examples.map-i875mjb7'
-}).addTo(map);
-function onLocationFound(e) {
-			var radius = e.accuracy / 2;
-
-			L.marker(e.latlng).addTo(map)
-				.bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-			L.circle(e.latlng, radius).addTo(map);
-		}
-
-		function onLocationError(e) {
-			alert(e.message);
-		}
-
-		map.on('locationfound', onLocationFound);
-		map.on('locationerror', onLocationError);
-
-		map.locate({setView: true, maxZoom: 16});
-
-</script>
-
-<div class="col-md-8">
-<div class="panel panel-default">
-<div class="panel-heading panel-heading-custom"><strong>Ward</strong></div>
-<div class="panel-body"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.	<span class="glyphicon glyphicon-link"></span></p></div>
-</div>
+      </script>
+    </div>
+    <div class="col-sm-4">
+      <h3>About</h3>        
+      <p>This could be anything, perhaps a legend</p>
+    </div>
+  </div>
 </div>
 
-
-<div class="col-md-4">  
-<div class="panel panel-default">
-<div class="panel-heading panel-heading-custom"><strong>Waste </strong></div>
-<div class="panel-body"><p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.	<span class="glyphicon glyphicon-link"></span></p></div>
-</div>	   
-</div>
-
-
-<div class="col-md-4">  
-<div class="panel panel-default">
-<div class="panel-heading panel-heading-custom"><strong>Conservation </strong></div>
-<div class="panel-body"><p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<span class="glyphicon glyphicon-link"></span></p></div>
-</div>	   
-</div>
-
-<div class="col-md-8">  
-<div class="panel panel-default">
-<div class="panel-heading panel-heading-custom"><strong>Schools </strong></div>
-<div class="panel-body"><p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span class="glyphicon glyphicon-link"></span>	</p>   
-</div>
-</div>	   
-</div>
-
-</div>
-<div class="panel panel-success">
-<div class="panel-heading"><strong>Planning </strong></div>
-<div class="panel-body"><table class="table">
-<thead>
-<tr>
-<th>Firstname</th>
-<th>Lastname</th>
-<th>Email</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>John</td>
-<td>Doe</td>
-<td>john@example.com</td>
-</tr>
-<tr>
-<td>Mary</td>xample.com
-<td>Moe</td>
-<td>mary@example.com</td>
-</tr>
-<tr>
-<td>July</td>
-<td>Dooley</td>
-<td>july@example.com</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
 
 </body>
 </html>
