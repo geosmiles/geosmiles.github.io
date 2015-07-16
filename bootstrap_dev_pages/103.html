@@ -12,15 +12,23 @@
   <script src="http://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
   <style>
     #map { height: 250px; }
-    #findbox {
+  #findbox {
 	background: #eee;
 	border-radius:.125em;
 	border:2px solid #1978cf;
 	box-shadow: 0 0 8px #999;	
 	margin-bottom: 10px;
 	padding: 2px 0;
-	width: 100%;
+	width: 600px;
 	height: 26px;
+}
+.search-tooltip {
+	width: 200px;
+}
+.leaflet-control-search .search-cancel {
+	position: static;
+	float: left;
+	margin-left: -22px;
 }
   </style>
 </head>
@@ -34,8 +42,9 @@
   <div class="row">
     <div class="col-sm-4">
       <div id="findbox"></div>
+      <div id="post-it">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <div id="map"></div>
       <script>
     <script>
