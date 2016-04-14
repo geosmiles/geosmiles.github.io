@@ -49,7 +49,15 @@
       </footer>
     </div>
 
-    
+  <script type="text/javascript">
+	// Generates a QR code using Google Charts API - useful for mobiles and print versions
+	// <![CDATA[
+	function qrcode(url){
+		document.write('<img src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;choe=UTF-8&amp;chl='+url+'" />');
+	}
+	qrcode(location.href);
+	//]]>
+	</script>
 
   </body>
 </html>
