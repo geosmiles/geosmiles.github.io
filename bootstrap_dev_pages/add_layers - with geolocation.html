@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap 102</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <style>
+    #map { height: 500px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <h3>Add Geojson Layers</h3>
+      <p>geolocation - enabled</p>
+    </div>
+    <div class="col-sm-9 col-md-9 col-lg-9">
+      <div id="map"></div>
+      <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+		function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+
+			L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+			L.circle(e.latlng, radius).addTo(map);
+		}
+
+		function onLocationError(e) {
+			alert(e.message);
+		}
+
+		map.on('locationfound', onLocationFound);
+		map.on('locationerror', onLocationError);
+
+		map.locate({setView: true, maxZoom: 16});
+
+		var points = $.getJSON('../data/points.geojson', function(data) {
+			L.geoJson(data, {
+			  onEachFeature: function (feature, layer) {
+				   layer.bindPopup(feature.properties.url);
+			  }
+			}).addTo(map);
+		});
+		
+
+		var lines = $.getJSON('../data/lines.geojson', function(data) {
+			L.geoJson(data, {
+			  onEachFeature: function (feature, layer) {
+				   layer.bindPopup(feature.properties.url);
+			  }
+			}).addTo(map);
+		});
+
+
+		var polygon = $.getJSON('../data/polygon.geojson', function(data) {
+			L.geoJson(data, {
+			  onEachFeature: function (feature, layer) {
+				   layer.bindPopup(feature.properties.url);
+			  }
+			}).addTo(map);
+		});		
+		
+		
+      </script>
+    </div>
+   <div class="col-sm-3 col-md-3 col-lg-3">
+      <h3>About</h3>        
+      <p>This could be anything, perhaps a legend</p>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
